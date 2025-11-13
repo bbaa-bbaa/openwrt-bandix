@@ -47,8 +47,12 @@ jobs:
             exit 1
           fi
           
-          # 格式化为 v0.8.1-r2 格式
-          latest_version="v${pkg_version}-r${pkg_release}"
+          # 格式化为 v0.8.1-r2 格式，如果是 r1 则省略
+          if [ "$pkg_release" = "1" ]; then
+            latest_version="v${pkg_version}"
+          else
+            latest_version="v${pkg_version}-r${pkg_release}"
+          fi
           echo "latest_version=${latest_version}" >> $GITHUB_OUTPUT
 
           remote_latest_version=$(wget -qO- -t1 -T2 ${{env.url_tags}} | jq -r '.tag_name')
