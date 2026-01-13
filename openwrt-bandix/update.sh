@@ -44,4 +44,5 @@ for (( i=0; i<$(jq -r '.assets | length' <<< "$LATEST_INFO"); i++ )); do
 done
 
 # update version
+sed -i "s|\(PKG_VERSION:=\).*|\1$LATEST_VERSION|" "$CURDIR/Makefile"
 sed -i "s|\(RUST_BANDIX_VERSION:=\).*|\1$LATEST_VERSION|" "$CURDIR/Makefile"
